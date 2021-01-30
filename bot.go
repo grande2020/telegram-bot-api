@@ -688,22 +688,3 @@ func (bot *BotAPI) CopyMessage(config CopyMessageConfig) (MessageID, error) {
 
 	return messageID, err
 }
-
-// AnswerCallbackQuery sends a response to an inline query callback.
-func (bot *BotAPI) AnswerCallbackQuery(config CallbackConfig) (APIResponse, error) {
-	v := url.Values{}
-
-	v.Add("callback_query_id", config.CallbackQueryID)
-	if config.Text != "" {
-		v.Add("text", config.Text)
-	}
-	v.Add("show_alert", strconv.FormatBool(config.ShowAlert))
-	if config.URL != "" {
-		v.Add("url", config.URL)
-	}
-	v.Add("cache_time", strconv.Itoa(config.CacheTime))
-
-	bot.debugLog("answerCallbackQuery", v, nil)
-
-	return bot.MakeRequest("answerCallbackQuery", v)
-}
